@@ -16,7 +16,7 @@ router.get("/getlocations", locationController.getLocations);
 
 router.get("/getlocationsnear/:latlng", locationController.getLocationsNear)
 
-// router.get("/getlocationsbyservice/:latlng/:serviceId", locationController.getNearLocationByServices)
+router.get("/getlocationsbyservice/:latlng/:serviceId", locationController.getNearLocationByServices)
 
 
 module.exports = router;
