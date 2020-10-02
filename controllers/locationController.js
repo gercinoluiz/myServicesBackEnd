@@ -83,42 +83,70 @@ exports.getNearLocationByServices = catchAsync(async (req, res, next) => {
   const { serviceId } = req.params;
   const [lat, lng] = req.params.latlng.split(",");
 
-  const serviceIdAsObject = mongoose.Types.ObjectId(serviceId);
-  const places = await Local.aggregate([
-    //First Stage
+  let places;
+  // With Service
+  console.log({ serviceId });
+  console.log(req.params.latlng);
 
-    {
-      $geoNear: {
-        near: {
-          type: "Point",
-          coordinates: [lat * 1, lng * 1],
+  if (serviceId !== "undefined") {
+    console.log("oi", serviceId);
+
+    const serviceIdAsObject = mongoose.Types.ObjectId(serviceId);
+
+    places = await Local.aggregate([
+      //First Stage
+
+      {
+        $geoNear: {
+          near: {
+            type: "Point",
+            coordinates: [lat * 1, lng * 1],
+          },
+          distanceField: "distance",
+          distanceMultiplier: 1 / 1000,
+          query: { services: serviceIdAsObject },
         },
-        distanceField: "distance",
-        distanceMultiplier: 1 / 1000,
-        query: { services: serviceIdAsObject },
       },
-    },
 
-    // I gotta use lookUp in agregation pipeline instead of populate
+      // I gotta use lookUp in agregation pipeline instead of populate
 
-    {
-      $lookup: {
-        from: "services", // The collection I whant the name for instance
-        localField: "services", // the field of the table I current have the id
-        foreignField: "_id", // The field of the forign table I wnat to compare with my localfield
-        as: "offered services",
+      {
+        $lookup: {
+          from: "services", // The collection I whant the name for instance
+          localField: "services", // the field of the table I current have the id
+          foreignField: "_id", // The field of the forign table I wnat to compare with my localfield
+          as: "offered services",
+        },
       },
-    },
 
-    {
-      $project: {
-        services: 0,
-        __v: 0,
+      {
+        $project: {
+          services: 0,
+          __v: 0,
+        },
       },
-    },
 
-    // {$}
-  ]);
+      // {$}
+    ]);
+  } else if (req.params.latlng !== "undefined") {
+
+    places = await Local.aggregate([
+      {
+        $geoNear: {
+          near: {
+            type: "Point",
+            coordinates: [lat * 1, lng * 1],
+          },
+
+          distanceField: "distance",
+          distanceMultiplier: 1 / 1000,
+        },
+      },
+    ]);
+  } else {
+    places = await Local.find();
+  }
+  // Withou Service
 
   res.status(200).json({
     status: "success",
@@ -150,7 +178,6 @@ exports.deletLocation = catchAsync(async (req, res, next) => {
 exports.updateLocation = catchAsync(async (req, res, next) => {
   const local = req.body;
   const id = req.params.localId;
-
 
   const updateLocal = await Local.findByIdAndUpdate(id, local, {
     runValidators: true,
