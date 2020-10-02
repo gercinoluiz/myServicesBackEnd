@@ -18,5 +18,9 @@ router.get("/getlocationsnear/:latlng", locationController.getLocationsNear)
 
 router.get("/getlocationsbyservice/:latlng/:serviceId", locationController.getNearLocationByServices)
 
+router.delete("/deleteLocation/:LocalId", locationController.deletLocation)
+
+router.patch("/updateLocation/:localId", locationController.updateLocation)
+
 
 module.exports = router;

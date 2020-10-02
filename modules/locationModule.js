@@ -22,7 +22,7 @@ const locationSchema = mongoose.Schema(
       street: String,
       nubmer: Number,
       city: String,
-      country: String,
+      state: String,
       description: String,
     },
 
