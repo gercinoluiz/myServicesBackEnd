@@ -9,7 +9,7 @@ O projeto usa a stack MERN, então eu criei uma REST API que me objetos JSON par
 
 Eu uso o NodeJS, Express e MongoDB como backend, no Front eu uso o React, usto também Material UI para me ajudar na estilização (sou péssimo haha).
 
-Modo de usar:
+# Modo de usar:
 Super simple, ao clicar na lupa para buscas de serviços no canto inferior direito, basta selecionar o serviço e o APP te retornará a unidade de atendimento ao público mais próxima de você!
 
 ##Documentação da API:
