@@ -11,6 +11,7 @@ const cors = require("cors");
 
 
 const serviceRoutes = require('./routes/serviceRoutes')
+const userRoutes = require('./routes/userRoutes')
 const locationRoutes = require('./routes/locationRoutes')
 
 const app = express();
@@ -51,6 +52,7 @@ app.use(xss());
 
 app.use("/services", serviceRoutes)
 app.use("/locations", locationRoutes)
+app.use("/users", userRoutes)
 
 
 if (process.env.ENVIROMENT === 'development') {
