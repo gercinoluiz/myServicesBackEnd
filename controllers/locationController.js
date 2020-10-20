@@ -5,6 +5,7 @@ const { query } = require("express");
 const mongoose = require("mongoose");
 
 exports.createLocation = catchAsync(async (req, res, next) => {
+  console.log(req.body);
   // Getting the street from the body
   const street = req.body.address.street;
 

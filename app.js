@@ -8,12 +8,20 @@ const hpp = require("hpp"); // prevent parameter polution
 const mongoSanitize = require("express-mongo-sanitize"); // prevent against Nosql Injection
 const cors = require("cors");
 
+<<<<<<< HEAD
 const serviceRoutes = require("./routes/serviceRoutes");
 const userRoutes = require("./routes/userRoutes");
 const globalErrorHAndler = require("./controllers/errorController");
 const AppError = require("./ultils/AppError");
 
 const locationRoutes = require("./routes/locationRoutes");
+=======
+
+
+const serviceRoutes = require('./routes/serviceRoutes')
+const userRoutes = require('./routes/userRoutes')
+const locationRoutes = require('./routes/locationRoutes')
+>>>>>>> 0f17ee47cf1f101132f3039204ab45e1b6fd04d2
 
 const app = express();
 
@@ -22,14 +30,22 @@ const limiter = rateLimit({
   max: 100,
 });
 
+<<<<<<< HEAD
 // ==========Security measures==========
 app.use(limiter); //
+=======
+
+
+// ==========Security measures==========
+app.use(limiter); // 
+>>>>>>> 0f17ee47cf1f101132f3039204ab45e1b6fd04d2
 app.use(helmet());
 
 //To accept other sites conection
 app.use(cors());
 app.enable("trust proxy");
 
+<<<<<<< HEAD
 //========== BODY PARSER: Reading data from the req.body==========
 app.use(
   express.json({
@@ -43,12 +59,26 @@ app.use(
     limit: "10kb",
   })
 );
+=======
+
+//========== BODY PARSER: Reading data from the req.body==========
+app.use(express.json({
+    limit: '10kb'
+}))
+
+app.use(express.urlencoded({
+    extended: true,
+    limit: '10kb'
+}));
+
+>>>>>>> 0f17ee47cf1f101132f3039204ab45e1b6fd04d2
 
 // I use it after the body parser!!
 
 app.use(mongoSanitize());
 app.use(xss());
 
+<<<<<<< HEAD
 app.use("/services", serviceRoutes);
 app.use("/locations", locationRoutes);
 app.use("/users", userRoutes);
@@ -77,3 +107,20 @@ if (process.env.ENVIROMENT === "development") {
 }
 
 module.exports = app;
+=======
+
+
+app.use("/services", serviceRoutes)
+app.use("/locations", locationRoutes)
+app.use("/users", userRoutes)
+
+
+if (process.env.ENVIROMENT === 'development') {
+    app.use(morgan('dev'));
+    console.log("Yor're in development mode - Morgan Activated Master")
+}
+
+
+
+module.exports = app;
+>>>>>>> 0f17ee47cf1f101132f3039204ab45e1b6fd04d2
