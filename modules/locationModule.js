@@ -7,6 +7,7 @@ const locationSchema = mongoose.Schema(
       type: String,
       unique: true,
     },
+    webSite: String,
 
     location: {
       type: {

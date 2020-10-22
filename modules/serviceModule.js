@@ -7,7 +7,11 @@ const serviceSchema = mongoose.Schema(
       type: String,
     },
 
-    sercretaria: String,
+    isOnline: Boolean,
+
+    webSite: {
+      type: String,
+    },
   },
   { timestaps: true }
 );
